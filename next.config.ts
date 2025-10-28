@@ -24,10 +24,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Remove unsupported keys (Next 16 no longer uses "experimental.turbo" or "eslint")
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // Explicitly opt in to Turbopack with default settings to avoid build errors
+  turbopack: {},
   typescript: {
     ignoreBuildErrors: true,
   },
