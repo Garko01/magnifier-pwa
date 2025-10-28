@@ -1,25 +1,25 @@
+import Head from "next/head";
 import MagnifierView from "../components/MagnifierView";
-import TorchButton from "../components/TorchButton";
 
 /**
- * Home Page – combines the Magnifier and TorchButton components
- * in a clean, senior-friendly layout.
+ * Home Page – clean, fullscreen entry for the Magnifyer PWA
  */
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-black text-white">
-      <h1 className="text-3xl font-bold mt-6 mb-4">
-        🔍 Magnifier + Torchlight
-      </h1>
+    <>
+      <Head>
+        <title>Magnifyer</title>
+        <meta name="description" content="Simple magnifier with torchlight and zoom control." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
 
-      <div className="w-full flex flex-col items-center">
+      <main className="flex flex-col items-center justify-center min-h-screen bg-black text-white">
         <MagnifierView />
-        <TorchButton />
-      </div>
 
-      <footer className="mt-8 mb-4 text-gray-400 text-base">
-        <p>© {new Date().getFullYear()} Garko01</p>
-      </footer>
-    </main>
+        <footer className="absolute bottom-2 text-gray-500 text-sm select-none">
+          © {new Date().getFullYear()} Garko01
+        </footer>
+      </main>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 {
-  "name": "Magnifier Torch",
-  "short_name": "Magnifier",
-  "description": "A clean, senior-friendly PWA that lets you magnify objects and use your device's torchlight.",
+  "name": "Magnifyer",
+  "short_name": "Magnifyer",
+  "description": "A minimal magnifier app with torchlight and zoom control.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
