@@ -94,44 +94,47 @@ export default function MagnifierView() {
   }, []);
 
     return (
-        <div className="relative flex flex-col items-center justify-center w-full h-full bg-black text-white overflow-hidden">
-            {/* 🔍 Title */}
-            <h1 className="text-[18px] font-semibold mt-3 mb-2 select-none">Magnifyer</h1>
+    <div className="relative flex flex-col items-center justify-center w-full h-full bg-black text-white overflow-hidden">
+        {/* 🔍 Title */}
+        <h1 className="text-[18px] font-semibold mt-3 mb-2 select-none">Magnifyer</h1>
 
-            {/* 📷 Camera */}
-            {error ? (
-            <p className="text-red-400 text-xl">{error}</p>
-            ) : (
-            <video
-                ref={videoRef}
-                autoPlay
-                playsInline
-                className="rounded-lg w-full h-full object-cover border border-gray-700 transition-transform duration-150 ease-in-out"
-                style={!supportsHardwareZoom ? { transform: `scale(${zoom})` } : undefined}
-            />
-            )}
+        {/* 📷 Camera */}
+        {error ? (
+        <p className="text-red-400 text-xl">{error}</p>
+        ) : (
+        <video
+            ref={videoRef}
+            autoPlay
+            playsInline
+            className="rounded-lg w-full h-full object-cover border border-gray-700 transition-transform duration-150 ease-in-out"
+            style={!supportsHardwareZoom ? { transform: `scale(${zoom})` } : undefined}
+        />
+        )}
 
-            {/* ⚙️ Settings Panel (fixed at bottom / right) */}
-            <div
-            className={`fixed z-20 flex flex-col items-center justify-center gap-4 p-4 
-                bg-black/50 backdrop-blur-md rounded-t-3xl border-t border-gray-700
-                transition-opacity duration-500 ease-in-out
-                portrait:bottom-0 portrait:left-0 portrait:w-full portrait:rounded-none
-                landscape:top-1/2 landscape:right-3 landscape:-translate-y-1/2 landscape:rounded-2xl
-                ${showControls ? "opacity-100" : "opacity-0 pointer-events-none"}
-            `}
-            >
-            <TorchButton />
+        {/* ⚙️ Settings Panel */}
+        <div
+        className={`controls fixed bottom-0 left-0 z-20 w-full px-4 pb-[calc(env(safe-area-inset-bottom)+12px)] pt-3
+            transition-all duration-700 ease-in-out
+            ${showControls ? "opacity-100" : "opacity-0 pointer-events-none translate-y-full"}
+        `}
+        >
+        <div className="mx-auto max-w-[900px] flex items-center justify-center gap-4 bg-black/60 backdrop-blur-md border-t border-white/10 rounded-t-2xl shadow-lg text-white px-5 py-3">
+            {/* Zoom Slider */}
             <input
-                type="range"
-                min="1"
-                max="3"
-                step="0.1"
-                value={zoom}
-                onChange={handleZoom}
-                className="w-3/4 sm:w-1/2 accent-white"
+            type="range"
+            min="1"
+            max="3"
+            step="0.1"
+            value={zoom}
+            onChange={handleZoom}
+            className="flex-1 accent-white cursor-pointer"
             />
-            </div>
+
+            {/* Torch Button */}
+            <TorchButton />
         </div>
+        </div>
+
+    </div>
     );
 }

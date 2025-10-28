@@ -53,8 +53,15 @@ video {
   }
 }
 
+/* Landscape: dock the controls to the right middle */
 @media (orientation: landscape) {
-  button[aria-label="Toggle Torch"] svg {
-    transform: rotate(90deg);
+  .controls {
+    position: fixed;
+    right: 1rem;
+    left: auto;
+    bottom: 50%;
+    transform: translateY(50%); /* right-center */
+    width: auto;                /* don't stretch across */
+    flex-direction: column;     /* stack slider over button */
   }
 }
