@@ -52,3 +52,9 @@ video {
     font-size: 1.5rem;
   }
 }
+
+@media (orientation: landscape) {
+  button[aria-label="Toggle Torch"] svg {
+    transform: rotate(90deg);
+  }
+}

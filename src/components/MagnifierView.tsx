@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import TorchButton from "./TorchButton"; // ✅ make sure this path is correct
 
 /**
  * MagnifierView Component
@@ -59,7 +60,7 @@ export default function MagnifierView() {
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-center mt-4 w-full">
+    <div className="relative flex flex-col items-center justify-center w-full h-screen bg-black">
       {error ? (
         <p className="text-red-400 text-xl">{error}</p>
       ) : (
@@ -67,7 +68,7 @@ export default function MagnifierView() {
           ref={videoRef}
           autoPlay
           playsInline
-          className={`rounded-lg w-full h-[80vh] object-cover border border-gray-700 transition-transform duration-150 ease-in-out`}
+          className={`rounded-lg w-full h-full object-cover border border-gray-700 transition-transform duration-150 ease-in-out`}
           style={
             !supportsHardwareZoom
               ? { transform: `scale(${zoom})` } // fallback zoom
@@ -76,15 +77,19 @@ export default function MagnifierView() {
         />
       )}
 
-      <input
-        type="range"
-        min="1"
-        max="3"
-        step="0.1"
-        value={zoom}
-        onChange={handleZoom}
-        className="absolute bottom-10 w-3/4 accent-white"
-      />
+      {/* ✅ Fixed Bottom Controls */}
+      <div className="fixed bottom-0 left-0 w-full flex flex-col items-center justify-center gap-4 pb-4 sm:pb-6 md:pb-8 landscape:flex-row landscape:gap-6 landscape:justify-center">
+        <TorchButton />
+        <input
+          type="range"
+          min="1"
+          max="3"
+          step="0.1"
+          value={zoom}
+          onChange={handleZoom}
+          className="w-3/4 sm:w-1/2 accent-white"
+        />
+      </div>
     </div>
   );
 }
