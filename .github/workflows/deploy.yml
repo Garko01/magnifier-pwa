@@ -3,7 +3,7 @@ name: Deploy Magnifier PWA to GitHub Pages
 
 on:
   push:
-    branches: ["master"]  # or "main" if that's your branch name
+    branches: ["main"]  # or "main" if that's your branch name
   workflow_dispatch:
 
 permissions:
