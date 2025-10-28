@@ -1,9 +1,9 @@
-# Deploy Next.js 16 (static export) PWA to GitHub Pages
-name: Deploy Magnifier PWA to GitHub Pages
+# Deploy Magnifier PWA to GitHub Pages
+name: Deploy Next.js PWA to GitHub Pages
 
 on:
   push:
-    branches: ["main"]  # or "main" if that's your branch name
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -44,10 +44,9 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
-          # Automatically sets correct basePath + disables SSR features
           static_site_generator: next
 
-      - name: Restore Next.js cache
+      - name: Restore cache
         uses: actions/cache@v4
         with:
           path: .next/cache
@@ -61,10 +60,10 @@ jobs:
       - name: Build static site
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
 
-      - name: Upload artifact for Pages
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out  # Static export directory from Next.js
+          path: ./out
 
   deploy:
     runs-on: ubuntu-latest
