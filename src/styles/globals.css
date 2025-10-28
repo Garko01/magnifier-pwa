@@ -1,13 +1,13 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* ===== Custom global styling ===== */
 
 html,
 body {
   @apply bg-black text-white font-sans text-lg antialiased;
-  touch-action: manipulation; /* smoother mobile interactions */
+  touch-action: manipulation;
 }
 
 button {
@@ -26,7 +26,6 @@ video {
   @apply rounded-2xl border border-gray-700;
 }
 
-/* Improve spacing on small screens */
 @media (max-width: 600px) {
   html,
   body {
