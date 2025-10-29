@@ -113,10 +113,10 @@ export default function MagnifierView() {
 
         {/* ⚙️ Settings Panel */}
         <div
-        className={`controls fixed bottom-0 left-0 z-20 w-full px-4 pb-[calc(env(safe-area-inset-bottom)+12px)] pt-3
-            transition-all duration-700 ease-in-out
-            ${showControls ? "opacity-100" : "opacity-0 pointer-events-none translate-y-full"}
-        `}
+          className={`controls fixed bottom-0 left-0 z-50 w-full px-4 pb-[calc(env(safe-area-inset-bottom)+12px)] pt-3
+              transition-all duration-700 ease-in-out
+              ${showControls ? "opacity-100" : "opacity-0 pointer-events-none translate-y-full"}
+          `}
         >
         <div className="mx-auto max-w-[900px] flex items-center justify-center gap-4 bg-black/60 backdrop-blur-md border-t border-white/10 rounded-t-2xl shadow-lg text-white px-5 py-3">
             {/* Zoom Slider */}

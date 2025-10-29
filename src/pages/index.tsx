@@ -14,7 +14,7 @@ export default function Home() {
       </Head>
 
       {/* Fullscreen App Container */}
-      <main className="w-full h-screen overflow-hidden bg-black text-white">
+      <main className="w-full h-[100dvh] overflow-hidden bg-black text-white">
         <MagnifierView />
       </main>
     </>
