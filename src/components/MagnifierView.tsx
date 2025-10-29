@@ -118,7 +118,7 @@ export default function MagnifierView() {
               ${showControls ? "opacity-100" : "opacity-0 pointer-events-none translate-y-full"}
           `}
         >
-        <div className="mx-auto max-w-[900px] flex items-center justify-center gap-4 bg-black/60 backdrop-blur-md border-t border-white/10 rounded-t-2xl shadow-lg text-white px-5 py-3">
+        <div className="mx-auto max-w-[900px] flex items-center justify-center gap-4 bg-black/60 backdrop-blur-md rounded-t-2xl shadow-lg text-white px-5 py-3">
             {/* Zoom Slider */}
             <input
             type="range"
