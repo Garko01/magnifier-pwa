@@ -1,6 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import TorchButton from "./TorchButton";
 
+// 🩵 Extend missing camera capability types for autofocus support
+declare global {
+  interface MediaTrackCapabilities {
+    focusMode?: string[];
+    focusDistance?: {
+      min?: number;
+      max?: number;
+      step?: number;
+    };
+  }
+}
+
 /**
  * MagnifierView
  * - Camera zoom + torch with auto-hide settings panel
@@ -59,13 +71,29 @@ export default function MagnifierView() {
         const videoTrack = stream.getVideoTracks()[0];
         setTrack(videoTrack);
 
-        const caps = videoTrack.getCapabilities();
+        // ✅ Autofocus (continuous) — only if supported
+        const caps = videoTrack.getCapabilities?.();
+        if (caps?.focusMode?.includes("continuous")) {
+          try {
+            await videoTrack.applyConstraints({
+              advanced: [{ focusMode: "continuous" }] as any,
+            });
+            console.log("✅ Continuous autofocus enabled");
+          } catch (err) {
+            console.warn("⚠️ Autofocus apply failed:", err);
+          }
+        } else {
+          console.log("ℹ️ Autofocus not available on this device");
+        }
+
+        // Zoom capability logging
         if (caps?.zoom) {
           console.log("🔍 Zoom range:", caps.zoom.min, "→", caps.zoom.max);
         } else {
           console.log("⚠️ No hardware zoom available");
         }
 
+        // Set up video stream
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
         }
