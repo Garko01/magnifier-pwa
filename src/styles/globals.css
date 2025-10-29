@@ -83,57 +83,37 @@ video {
   }
 }
 
-/* ===== Custom dark slider styling ===== */
+.ytp-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+.ytp-button:hover {
+  opacity: 0.8;
+}
+.ytp-button:active {
+  transform: scale(0.95);
+}
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
-  width: 100%;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
-  outline: none;
-  accent-color: white;
-  cursor: pointer;
+  background: transparent;
 }
-
-/* Chrome / Safari */
-input[type="range"]::-webkit-slider-runnable-track {
-  background: rgba(255, 255, 255, 0.2);
-  height: 4px;
-  border-radius: 2px;
-}
-
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  background: white;
-  border: 2px solid #000;
+  height: 12px;
+  width: 12px;
   border-radius: 50%;
-  margin-top: -8px; /* centers thumb on track */
-  cursor: pointer;
-}
-
-/* Firefox */
-input[type="range"]::-moz-range-track {
-  background: rgba(255, 255, 255, 0.2);
-  height: 4px;
-  border-radius: 2px;
-}
-
-input[type="range"]::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
   background: white;
-  border: 2px solid #000;
-  border-radius: 50%;
   cursor: pointer;
+  margin-top: -5px;
 }
-
-/* Edge / IE (optional fallback) */
-input[type="range"]::-ms-track {
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 2px;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.3);
 }

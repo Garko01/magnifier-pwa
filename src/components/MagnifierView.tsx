@@ -15,6 +15,22 @@ export default function MagnifierView() {
   const [showControls, setShowControls] = useState(true);
   const wakeLockRef = useRef<WakeLockSentinel | null>(null);
   const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [torchOn, setTorchOn] = useState(false);
+
+  const toggleTorch = async () => {
+    if (!track) return;
+    const capabilities = track.getCapabilities?.();
+    if (!("torch" in capabilities)) return;
+
+    try {
+      await track.applyConstraints({
+        advanced: [{ torch: !torchOn } as any],
+      });
+      setTorchOn(!torchOn);
+    } catch (err) {
+      console.error("Torch toggle failed:", err);
+    }
+  };
 
   // Start camera
   useEffect(() => {
@@ -112,28 +128,74 @@ export default function MagnifierView() {
         )}
 
         {/* ⚙️ Settings Panel */}
-        <div
-          className={`controls fixed bottom-0 left-0 z-50 w-full px-4 pb-[calc(env(safe-area-inset-bottom)+12px)] pt-3
-              transition-all duration-700 ease-in-out
-              ${showControls ? "opacity-100" : "opacity-0 pointer-events-none translate-y-full"}
-          `}
-        >
-        <div className="mx-auto max-w-[900px] flex items-center justify-center gap-4 bg-black/60 backdrop-blur-md rounded-t-2xl shadow-lg text-white px-5 py-3">
-            {/* Zoom Slider */}
-            <input
-            type="range"
-            min="1"
-            max="3"
-            step="0.1"
-            value={zoom}
-            onChange={handleZoom}
-            className="flex-1 accent-white cursor-pointer"
-            />
+{/* ⚙️ Bottom Control Bar */}
+<div
+  className={`controls fixed bottom-0 left-0 z-[2016] w-full
+    transition-all duration-500 ease-in-out
+    ${showControls ? "opacity-100 translate-y-0" : "opacity-0 pointer-events-none translate-y-full"}
+  `}
+>
+  <div
+    className="mx-auto max-w-[900px] flex items-center justify-center gap-5
+      bg-[rgba(15,15,15,0.55)] backdrop-blur-md
+      border-t border-[rgba(255,255,255,0.06)]
+      rounded-t-[12px]
+      shadow-[0_-2px_12px_rgba(0,0,0,0.4)]
+      px-5 py-3 text-white text-sm select-none"
+  >
+    {/* Torch Button */}
+    <button
+      onClick={toggleTorch}
+      className="p-2 rounded-full hover:bg-white/10 active:scale-95 transition-all duration-200"
+      aria-label="Toggle torch"
+    >
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill={torchOn ? "#ffcc00" : "white"}
+        className="drop-shadow-[0_0_4px_rgba(255,255,255,0.3)] transition-colors duration-300"
+      >
+        <path d="M6 2h12v2h-12V2zm3 20h6v-10h-6v10zm3-12c1.1 0 2-.9 2-2V6h-4v2c0 1.1.9 2 2 2z" />
+      </svg>
+    </button>
 
-            {/* Torch Button */}
-            <TorchButton />
-        </div>
-        </div>
+    {/* Magnifier Zoom Slider (YouTube Volume Slider Style) */}
+    <div className="flex items-center flex-1 justify-center">
+      <div className="relative w-full h-[4px] rounded-full bg-[rgba(255,255,255,0.25)] overflow-visible group">
+        {/* Native input range (invisible for native behavior) */}
+        <input
+          type="range"
+          min="1"
+          max="3"
+          step="0.1"
+          value={zoom}
+          onChange={handleZoom}
+          className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10"
+        />
+
+        {/* Filled portion — soft white glow */}
+        <div
+          className="absolute top-0 left-0 h-full bg-[rgba(255,255,255,0.9)] 
+                     shadow-[0_0_6px_rgba(255,255,255,0.6)] rounded-full
+                     transition-all duration-150 ease-out"
+          style={{ width: `${((zoom - 1) / 2) * 100}%` }}
+        />
+
+        {/* Handle — small round dot like YouTube’s volume knob */}
+        <div
+          className="absolute top-1/2 -translate-y-1/2 h-[12px] w-[12px]
+                    bg-[rgba(255,255,255,0.95)] rounded-full
+                    shadow-[0_0_10px_rgba(0,0,0,0.6),0_0_8px_rgba(255,255,255,0.7)]
+                    border border-[rgba(255,255,255,0.5)]
+                    transition-transform duration-150
+                    group-hover:scale-125 active:scale-95"
+          style={{ left: `calc(${((zoom - 1) / 2) * 100}% - 6px)` }}
+        />
+      </div>
+    </div>
+  </div>
+</div>
 
     </div>
     );
