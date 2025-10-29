@@ -188,7 +188,6 @@ export default function MagnifierView() {
         />
         )}
 
-        {/* ⚙️ Settings Panel */}
 {/* ⚙️ Bottom Control Bar */}
 <div
   className={`controls fixed bottom-0 left-0 z-[2016] w-full
@@ -244,18 +243,25 @@ export default function MagnifierView() {
           className="absolute top-0 left-0 h-full bg-[rgba(255,255,255,0.9)] 
                      shadow-[0_0_6px_rgba(255,255,255,0.6)] rounded-full
                      transition-all duration-150 ease-out"
-          style={{ width: `${((zoom - 1) / 2) * 100}%` }}
+          style={{
+            width: `${((zoom - zoomRange.min) / (zoomRange.max - zoomRange.min)) * 100}%`
+          }}
         />
 
         {/* Handle — small round dot like YouTube’s volume knob */}
         <div
           className="absolute top-1/2 -translate-y-1/2 h-[12px] w-[12px]
-                    bg-[rgba(255,255,255,0.95)] rounded-full
-                    shadow-[0_0_10px_rgba(0,0,0,0.6),0_0_8px_rgba(255,255,255,0.7)]
-                    border border-[rgba(255,255,255,0.5)]
-                    transition-transform duration-150
-                    group-hover:scale-125 active:scale-95"
-          style={{ left: `calc(${((zoom - 1) / 2) * 100}% - 6px)` }}
+            bg-[rgba(255,255,255,0.95)] rounded-full
+            shadow-[0_0_10px_rgba(0,0,0,0.6),0_0_8px_rgba(255,255,255,0.7)]
+            border border-[rgba(255,255,255,0.5)]
+            transition-transform duration-150
+            group-hover:scale-125 active:scale-95"
+          style={{
+            left: `calc(${Math.min(Math.max(
+              ((zoom - zoomRange.min) / (zoomRange.max - zoomRange.min)) * 100,
+              0
+            ), 100)}% - 6px)`,
+          }}
         />
       </div>
     </div>
