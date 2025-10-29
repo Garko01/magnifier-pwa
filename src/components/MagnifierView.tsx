@@ -16,6 +16,22 @@ export default function MagnifierView() {
   const wakeLockRef = useRef<WakeLockSentinel | null>(null);
   const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [torchOn, setTorchOn] = useState(false);
+  const [isSliding, setIsSliding] = useState(false);
+
+  const [zoomRange, setZoomRange] = useState({ min: 1, max: 3, step: 0.1 });
+
+  useEffect(() => {
+    if (track) {
+      const caps = track.getCapabilities?.();
+      if (caps?.zoom) {
+        setZoomRange({
+          min: caps.zoom.min ?? 1,
+          max: caps.zoom.max ?? 3,
+          step: caps.zoom.step ?? 0.1,
+        });
+      }
+    }
+  }, [track]);
 
   const toggleTorch = async () => {
     if (!track) return;
@@ -42,6 +58,13 @@ export default function MagnifierView() {
 
         const videoTrack = stream.getVideoTracks()[0];
         setTrack(videoTrack);
+
+        const caps = videoTrack.getCapabilities();
+        if (caps?.zoom) {
+          console.log("🔍 Zoom range:", caps.zoom.min, "→", caps.zoom.max);
+        } else {
+          console.log("⚠️ No hardware zoom available");
+        }
 
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
@@ -77,15 +100,25 @@ export default function MagnifierView() {
     };
   }, []);
 
+  const handleZoomStart = () => {
+    setIsSliding(true);
+    setShowControls(true); // make sure panel stays visible while dragging
+    if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+  };
+
+  const handleZoomEnd = () => {
+    setIsSliding(false);
+    if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+    hideTimeoutRef.current = setTimeout(() => setShowControls(false), 4000);
+  };
+
   const handleZoom = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const newZoom = Number(e.target.value);
     setZoom(newZoom);
 
     if (supportsHardwareZoom && track) {
       try {
-        await track.applyConstraints({
-          advanced: [{ zoom: newZoom }] as any,
-        });
+        await track.applyConstraints({ advanced: [{ zoom: newZoom }] as any });
       } catch (err) {
         console.warn("Zoom not supported on this device:", err);
         setSupportsHardwareZoom(false);
@@ -166,11 +199,15 @@ export default function MagnifierView() {
         {/* Native input range (invisible for native behavior) */}
         <input
           type="range"
-          min="1"
-          max="3"
-          step="0.1"
+          min={zoomRange.min}
+          max={zoomRange.max}
+          step={zoomRange.step}
           value={zoom}
           onChange={handleZoom}
+          onMouseDown={handleZoomStart}
+          onTouchStart={handleZoomStart}
+          onMouseUp={handleZoomEnd}
+          onTouchEnd={handleZoomEnd}
           className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10"
         />
 
