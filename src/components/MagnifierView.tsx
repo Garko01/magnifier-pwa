@@ -202,19 +202,18 @@ export default function MagnifierView() {
 
     {/* Center column holds the content row */}
     <div className="col-start-2 col-end-3">
-      <div className="flex items-center">
+      <div className="flex items-center justify-center px-[2vw]">
 {/* 🔦 Torch Button */}
-<button
-  onClick={toggleTorch}
-  className={`flex-shrink-0 h-[56px] w-[56px] flex items-center justify-center rounded-full
-              backdrop-blur-md border border-[rgba(255,255,255,0.08)]
-              shadow-[0_2px_10px_rgba(0,0,0,0.45)]
-              active:scale-95 transition-all duration-200
-              ${torchOn
-                ? "bg-white hover:bg-neutral-200"
-                : "bg-[rgba(15,15,15,0.55)] hover:bg-[rgba(30,30,30,0.65)]"}`}
-  aria-label="Toggle torch"
->
+    <button
+      onClick={toggleTorch}
+      className="flex-none shrink-0 h-[56px] w-[56px] flex items-center justify-center
+                 rounded-full bg-[rgba(15,15,15,0.55)] backdrop-blur-md
+                 border border-[rgba(255,255,255,0.08)]
+                 shadow-[0_2px_10px_rgba(0,0,0,0.45)]
+                 hover:bg-[rgba(30,30,30,0.65)]
+                 active:scale-95 transition-all duration-200"
+      aria-label="Toggle torch"
+    >
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -237,15 +236,13 @@ export default function MagnifierView() {
 </button>
 
         {/* 🎚️ Zoom Slider Pill */}
-        <div
-          className="ml-4 h-[56px] flex items-center
-                     bg-[rgba(15,15,15,0.55)] backdrop-blur-md
-                     border border-[rgba(255,255,255,0.08)]
-                     rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.45)]
-                     px-4 sm:px-6
-                     min-w-[44vw] max-w-[78vw]"
-          /* Let the slider grow/shrink but keep a sensible min/max so it won’t “shrink to a dot” */
-        >
+    <div
+      className="ml-[3vw] flex-1 min-w-0 h-[56px] flex items-center
+                 bg-[rgba(15,15,15,0.55)] backdrop-blur-md
+                 border border-[rgba(255,255,255,0.08)]
+                 rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.45)]
+                 px-[4vw] sm:px-6 min-w-[44vw] max-w-[78vw]"
+    >
           {/* Invisible input */}
           <input
             type="range"
