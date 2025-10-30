@@ -204,35 +204,56 @@ export default function MagnifierView() {
     <div className="col-start-2 col-end-3">
       <div className="flex items-center justify-center px-[2vw]">
 {/* 🔦 Torch Button */}
-    <button
-      onClick={toggleTorch}
-      className="flex-none shrink-0 h-[56px] w-[56px] flex items-center justify-center
-                 rounded-full bg-[rgba(15,15,15,0.55)] backdrop-blur-md
-                 border border-[rgba(255,255,255,0.08)]
-                 shadow-[0_2px_10px_rgba(0,0,0,0.45)]
-                 hover:bg-[rgba(30,30,30,0.65)]
-                 active:scale-95 transition-all duration-200"
-      aria-label="Toggle torch"
+<button
+  onClick={toggleTorch}
+  aria-label="Toggle torch"
+  className={`flex-none shrink-0 h-[56px] w-[56px] flex items-center justify-center
+              rounded-full backdrop-blur-md border border-[rgba(255,255,255,0.08)]
+              shadow-[0_2px_10px_rgba(0,0,0,0.45)]
+              active:scale-95 transition-all duration-200
+              ${torchOn
+                ? "bg-white hover:bg-neutral-200 shadow-[0_0_12px_rgba(255,255,255,0.6)]"
+                : "bg-[rgba(15,15,15,0.55)] hover:bg-[rgba(30,30,30,0.65)]"}`}
+>
+  {/* Flashlight SVG */}
+  {torchOn ? (
+    // ON State Icon
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="black"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-flashlight-icon w-6 h-6 transition-all duration-300"
     >
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke={torchOn ? "black" : "white"}  // 👈 toggles color dynamically
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={`lucide lucide-flashlight w-6 h-6 transition-all duration-300
-                ${torchOn
-                  ? "drop-shadow-[0_0_6px_rgba(0,0,0,0.3)]"
-                  : "drop-shadow-[0_0_6px_rgba(255,255,255,0.5)]"}`}
-  >
-    <path d="M18 6c0 2-2 2-2 4v10a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V10c0-2-2-2-2-4V2h12z" />
-    <line x1="6" x2="18" y1="6" y2="6" />
-    <line x1="12" x2="12" y1="12" y2="12" />
-  </svg>
+      <path d="M18 6c0 2-2 2-2 4v10a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V10c0-2-2-2-2-4V2h12z" />
+      <line x1="6" x2="18" y1="6" y2="6" />
+      <line x1="12" x2="12" y1="12" y2="12" />
+    </svg>
+  ) : (
+    // OFF State Icon
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="white"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-flashlight-off-icon w-6 h-6 transition-all duration-300"
+    >
+      <path d="M16 16v4a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V10c0-2-2-2-2-4" />
+      <path d="M7 2h11v4c0 2-2 2-2 4v1" />
+      <line x1="11" x2="18" y1="6" y2="6" />
+      <line x1="2" x2="22" y1="2" y2="22" />
+    </svg>
+  )}
 </button>
 
         {/* 🎚️ Zoom Slider Pill */}
