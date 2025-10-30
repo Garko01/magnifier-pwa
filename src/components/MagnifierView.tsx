@@ -255,36 +255,43 @@ export default function MagnifierView() {
             onTouchStart={handleZoomStart}
             onMouseUp={handleZoomEnd}
             onTouchEnd={handleZoomEnd}
-            className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10"
+            className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10 "
           />
 
-          {/* Track */}
-          <div className="w-[calc(100%-1rem)] mx-auto h-[6px] rounded-full bg-[rgba(255,255,255,0.25)] relative overflow-visible group">
-            {/* Fill */}
-            <div
-              className="absolute top-0 left-0 h-full bg-[rgba(255,255,255,0.9)]
-                         shadow-[0_0_6px_rgba(255,255,255,0.6)] rounded-full
-                         transition-all duration-150 ease-out"
-              style={{
-                width: `${((zoom - zoomRange.min) / (zoomRange.max - zoomRange.min)) * 100}%`,
-              }}
-            />
-            {/* Handle */}
-            <div
-              className="absolute top-1/2 -translate-y-1/2 h-[16px] w-[16px]
-                         bg-[rgba(255,255,255,0.95)] rounded-full
-                         shadow-[0_0_10px_rgba(0,0,0,0.6),0_0_8px_rgba(255,255,255,0.7)]
-                         border border-[rgba(255,255,255,0.5)]
-                         transition-transform duration-150
-                         group-hover:scale-125 active:scale-95"
-              style={{
-                left: `calc(${Math.min(
-                  Math.max(((zoom - zoomRange.min) / (zoomRange.max - zoomRange.min)) * 100, 0),
-                  100
-                )}% - 8px)`,
-              }}
-            />
-          </div>
+{/* Track */}
+<div className="relative w-[calc(100%-1rem)] mx-auto h-[6px] rounded-full bg-[rgba(255,255,255,0.25)] overflow-visible group">
+  {/* Invisible input */}
+  <input
+    type="range"
+    min={zoomRange.min}
+    max={zoomRange.max}
+    step={zoomRange.step}
+    value={zoom}
+    onChange={handleZoom}
+    onMouseDown={handleZoomStart}
+    onTouchStart={handleZoomStart}
+    onMouseUp={handleZoomEnd}
+    onTouchEnd={handleZoomEnd}
+    className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-10"
+  />
+
+  {/* Fill */}
+  <div
+    className="absolute top-0 left-0 h-full bg-[rgba(255,255,255,0.9)] shadow-[0_0_6px_rgba(255,255,255,0.6)] rounded-full transition-all duration-150 ease-out"
+    style={{ width: `${((zoom - zoomRange.min) / (zoomRange.max - zoomRange.min)) * 100}%` }}
+  />
+
+  {/* Handle */}
+  <div
+    className="absolute top-1/2 -translate-y-1/2 h-[16px] w-[16px] bg-[rgba(255,255,255,0.95)] rounded-full shadow-[0_0_10px_rgba(0,0,0,0.6),0_0_8px_rgba(255,255,255,0.7)] border border-[rgba(255,255,255,0.5)] transition-transform duration-150 group-hover:scale-125 active:scale-95"
+    style={{
+      left: `calc(${Math.min(
+        Math.max(((zoom - zoomRange.min) / (zoomRange.max - zoomRange.min)) * 100, 0),
+        100
+      )}% - 8px)`,
+    }}
+  />
+</div>
         </div>
       </div>
     </div>
