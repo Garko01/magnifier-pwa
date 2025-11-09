@@ -1,3 +1,7 @@
+# PWA Magnifier
+
+A Progressive Web App magnifier built with Next.js, featuring hardware-accelerated zoom and flashlight control.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
 ## Getting Started
